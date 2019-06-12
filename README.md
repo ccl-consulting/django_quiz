@@ -36,6 +36,7 @@ Features of each quiz:
 * Start and end times for sitting exams are recorded
 * i18n support
 * Russian and Italian language translation
+* Import / Export with [django-import-export](https://github.com/django-import-export/django-import-export)
 
 
 

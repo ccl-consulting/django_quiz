@@ -22,6 +22,7 @@ Current features
 * Custom message displayed for those that pass or fail a quiz
 * Custom permission (view_sittings) added, allowing users with that permission to view quiz results from users
 * A marking page which lists completed quizzes, can be filtered by quiz or user, and is used to mark essay questions
+* Import / Export with [django-import-export](https://github.com/django-import-export/django-import-export)
 
 
 Requirements

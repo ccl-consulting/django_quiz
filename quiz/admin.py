@@ -1,3 +1,5 @@
+from import_export.admin import ImportExportMixin
+from import_export.resources import ModelResource
 from django import forms
 from django.contrib import admin
 from django.contrib.admin.widgets import FilteredSelectMultiple
@@ -47,25 +49,52 @@ class QuizAdminForm(forms.ModelForm):
         return quiz
 
 
-class QuizAdmin(admin.ModelAdmin):
+class QuizResource(ModelResource):
+
+    class Meta:
+        model = Quiz
+
+
+class QuizAdmin(ImportExportMixin, admin.ModelAdmin):
     form = QuizAdminForm
 
     list_display = ('title', 'category', )
     list_filter = ('category',)
     search_fields = ('description', 'category', )
+    resource_class = QuizResource
 
 
-class CategoryAdmin(admin.ModelAdmin):
+class CategoryResource(ModelResource):
+
+    class Meta:
+        model = MCQuestion
+
+
+class CategoryAdmin(ImportExportMixin, admin.ModelAdmin):
     search_fields = ('category', )
+    resource_class = CategoryResource
 
 
-class SubCategoryAdmin(admin.ModelAdmin):
+class SubCategoryResource(ModelResource):
+
+    class Meta:
+        model = SubCategory
+
+
+class SubCategoryAdmin(ImportExportMixin, admin.ModelAdmin):
     search_fields = ('sub_category', )
     list_display = ('sub_category', 'category',)
     list_filter = ('category',)
+    resource_class = SubCategoryResource
 
 
-class MCQuestionAdmin(admin.ModelAdmin):
+class MCResource(ModelResource):
+
+    class Meta:
+        model = MCQuestion
+
+
+class MCQuestionAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = ('content', 'category', )
     list_filter = ('category',)
     fields = ('content', 'category', 'sub_category',
@@ -75,17 +104,31 @@ class MCQuestionAdmin(admin.ModelAdmin):
     filter_horizontal = ('quiz',)
 
     inlines = [AnswerInline]
+    resource_class = MCResource
 
 
-class ProgressAdmin(admin.ModelAdmin):
+class ProgressResource(ModelResource):
+
+    class Meta:
+        model = Progress
+
+
+class ProgressAdmin(ImportExportMixin, admin.ModelAdmin):
     """
     to do:
             create a user section
     """
+    resource_class = ProgressResource
     search_fields = ('user', 'score', )
 
 
-class TFQuestionAdmin(admin.ModelAdmin):
+class TFResource(ModelResource):
+
+    class Meta:
+        model = TF_Question
+
+
+class TFQuestionAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = ('content', 'category', )
     list_filter = ('category',)
     fields = ('content', 'category', 'sub_category',
@@ -93,14 +136,23 @@ class TFQuestionAdmin(admin.ModelAdmin):
 
     search_fields = ('content', 'explanation')
     filter_horizontal = ('quiz',)
+    resource_class = TFResource
 
 
-class EssayQuestionAdmin(admin.ModelAdmin):
+class EssayResource(ModelResource):
+
+    class Meta:
+        model = Essay_Question
+
+
+class EssayQuestionAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = ('content', 'category', )
     list_filter = ('category',)
     fields = ('content', 'category', 'sub_category', 'quiz', 'explanation', )
     search_fields = ('content', 'explanation')
     filter_horizontal = ('quiz',)
+    resource_class = EssayResource
+
 
 admin.site.register(Quiz, QuizAdmin)
 admin.site.register(Category, CategoryAdmin)
